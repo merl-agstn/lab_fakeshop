@@ -1,22 +1,3 @@
-import {getProducts} from './api.js';
+import {RenderCards} from './components/cards.js';
 
-let productList = document.querySelector('#product-list');
-console.log(productList);
-
-getProducts().then((products) => {
-  let template = '';
-  products.forEach((p) => {
-    template += `
-      <div class="col">
-        <div class="card">
-          <img src="${p.image}" class="card-img-top" alt="${p.title}">
-          <div class="card-body">
-            <h5 class="card-title">${p.title}</h5>
-            <p class="card-text">${p.description}</p>
-          </div>
-        </div>
-      </div>
-    `;
-  });
-  productList.innerHTML = template;
-});
+RenderCards();
