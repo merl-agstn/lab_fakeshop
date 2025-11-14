@@ -1,3 +1,6 @@
+import { saveLocalStorage } from "../storage/storage.js";
+import { counter,addEventListeners } from "./counter.js";
+
 export function Modal(product) {
     const container = document.querySelector('#productModal');
     if (!container) {
@@ -17,8 +20,9 @@ export function Modal(product) {
             <div class="modal-body pt-0">
                 <div class="text-center mb-3">
                     <img src="${product.image}" alt="${product.title}" class="img-fluid rounded-3 border" style="max-height: 220px; object-fit: contain;">
+                    ${counter(product.id)}
                 </div>
-                <div class="text-end">
+                <div id="btnProduct" class="text-end">                   
                     <p class="fw-semibold fs-4 text-success mb-1">$ ${product.price}</p>
                     <p class="text-muted small mb-3">Calificación: ${product.rating.rate} ★ (${product.rating.count} reseñas)</p>
                 </div>
@@ -27,13 +31,24 @@ export function Modal(product) {
             </div>
             <div class="modal-footer border-0">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Agregar al carrito</button>
+                <button type="button" class="btn btn-primary" id="addtoCartBtn-${product.id}">Agregar al carrito</button>
             </div>
         </div>
     </div>`;
 
+    //Cargo el template con los listener de el contador.
     container.innerHTML = template;
+    addEventListeners(product.id);
+
+    //Agrego listener para mandar al storage.
+    let btnAddCart = document.querySelector(`#addtoCartBtn-${product.id}`);
+    btnAddCart.addEventListener('click',() => {
+        product.qtty = 1;
+        saveLocalStorage(product);
+        btnAddCart.innerHTML = `Agregado!`;
+    });
 
     const bootstrapModal = new bootstrap.Modal(container);
     bootstrapModal.show();
+
 }
