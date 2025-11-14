@@ -10,9 +10,8 @@ export function initLocalStorage(){
 export function getLocalStorage(){
     return JSON.parse(localStorage.getItem(stg_key)) || [];
 }
-//Guardo en storage
-export function saveLocalStorage(item){
-    let cart = getLocalStorage();
-    cart.push(item);
-    localStorage.setItem(stg_key,JSON.stringify(cart));
+
+//Seteo items en storage.
+export function setItemLocalStorage(items){
+    localStorage.setItem(stg_key,JSON.stringify(items));
 }

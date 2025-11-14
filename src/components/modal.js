@@ -1,4 +1,4 @@
-import { saveLocalStorage } from "../storage/storage.js";
+import { getLocalStorage, setItemLocalStorage } from "../storage/storage.js";
 import { counter,addEventListeners } from "./counter.js";
 
 export function Modal(product) {
@@ -40,11 +40,14 @@ export function Modal(product) {
     container.innerHTML = template;
     addEventListeners(product.id);
 
-    //Agrego listener para mandar al storage.
+    //Agrego listener para mandar el producto al storage.
     let btnAddCart = document.querySelector(`#addtoCartBtn-${product.id}`);
     btnAddCart.addEventListener('click',() => {
-        product.qtty = 1;
-        saveLocalStorage(product);
+        product.qtty = document.querySelector(`#counter-${product.id}`).textContent;
+        let dataStorage = getLocalStorage();
+        let exists = dataStorage.filter( (p) => p.id != product.id);
+            exists.push(product);
+            setItemLocalStorage(exists);
         btnAddCart.innerHTML = `Agregado!`;
     });
 

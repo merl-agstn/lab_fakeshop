@@ -1,3 +1,4 @@
+//Agrego contador.
 export function counter(id){
     let templateCount = `
         <div>
@@ -12,17 +13,26 @@ export function counter(id){
     return templateCount;
 }
 
+//Agrego listeners.
 export function addEventListeners(id){
     let btnIncrement = document.querySelector(`#incrementBtn-${id}`);
     let btnDecrement = document.querySelector(`#decrementBtn-${id}`);
-    //let spanCounter = document.querySelector(`#counter-${id}`);
+    let spanCounter = document.querySelector(`#counter-${id}`);
+    let b = 1;
 
+    //Sumamos.
     btnIncrement.addEventListener(`click`, () => {
-        console.log(`incrementé`);
+        b++;
+        spanCounter.textContent = `${b}`;
     });
 
+    //Restamos.
     btnDecrement.addEventListener(`click`,() => {
-        console.log(`decremente`);
+        if(b > 1){
+            b--;
+            spanCounter.textContent = `${b}`;
+        }
+        spanCounter.textContent = `${b}`;
     });
 
 }
